@@ -1,0 +1,63 @@
+INFO:werkzeug: * Detected change in '/app/functions.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 418-025-717
+INFO:root:The trade is starting {'currency_in': 'EUR', 'currency_out': 'USD', 'amount': 40.0}
+INFO:root:The trade is starting {'currency_in': 'EUR', 'currency_out': 'USD', 'amount': 40.0}
+INFO:root:The first trade is done 40.0
+INFO:root:The second trade is done 42.902319999999996
+INFO:root:The trade is done successfully
+INFO:root:The trade is starting {'currency_in': 'EUR', 'currency_out': 'USD', 'amount': 40.0}
+INFO:root:The trade is done successfully
+INFO:werkzeug:172.17.0.1 - - [05/Jun/2023 19:10:57] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
+INFO:werkzeug:172.17.0.1 - - [05/Jun/2023 19:11:01] "GET /exchanges HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/app/functions.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 418-025-717
+INFO:root:The trade is starting {'currency_out': 'BTC', 'currency_in': 'EUR', 'amount': 40.0}
+INFO:root:The trade is starting {'currency_out': 'BTC', 'currency_in': 'EUR', 'amount': 40.0}
+INFO:root:The first trade is done 40.0
+INFO:root:The second trade is done 0.0016
+INFO:root:The trade is done successfully
+INFO:root:The trade is starting {'currency_out': 'BTC', 'currency_in': 'EUR', 'amount': 40.0}
+INFO:root:The trade is done successfully
+INFO:werkzeug:172.17.0.1 - - [05/Jun/2023 19:12:54] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
+INFO:werkzeug:172.17.0.1 - - [05/Jun/2023 19:12:56] "GET /exchanges HTTP/1.1" 200 -
+INFO:root:The trade is starting {'currency_out': 'ETH', 'currency_in': 'EUR', 'amount': 20.0}
+INFO:root:The trade is starting {'currency_out': 'ETH', 'currency_in': 'EUR', 'amount': 20.0}
+INFO:root:The first trade is done 20.0
+INFO:root:The second trade is done 0.01134
+INFO:root:The trade is done successfully
+INFO:root:The trade is starting {'currency_out': 'ETH', 'currency_in': 'EUR', 'amount': 20.0}
+INFO:root:The trade is done successfully
+INFO:werkzeug:172.17.0.1 - - [05/Jun/2023 19:13:18] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
+INFO:root:The trade is starting {'currency_out': 'BOB', 'currency_in': 'EUR', 'amount': 20.0}
+INFO:root:The trade is starting {'currency_out': 'BOB', 'currency_in': 'EUR', 'amount': 20.0}
+INFO:root:The first trade is done 20.0
+INFO:root:The second trade is done 148.78726
+INFO:root:The trade is done successfully
+INFO:root:The trade is starting {'currency_out': 'BOB', 'currency_in': 'EUR', 'amount': 20.0}
+INFO:root:The funds droped to zero{'currency_out': 'BOB', 'currency_in': 'EUR', 'amount': 20.0}
+INFO:root:The trade is done successfully
+INFO:werkzeug:172.17.0.1 - - [05/Jun/2023 19:13:38] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
+INFO:werkzeug:172.17.0.1 - - [05/Jun/2023 19:13:46] "GET /exchanges HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/app/functions.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 418-025-717
+INFO:werkzeug: * Detected change in '/app/functions.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 418-025-717
+INFO:root:The trade is starting {'amount': 20.0, 'currency_out': 'BOB', 'currency_in': 'EUR'}
+INFO:werkzeug:172.17.0.1 - - [05/Jun/2023 19:56:46] "[31m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 400 -
+INFO:root:The trade is starting {'amount': 5.0, 'currency_out': 'BOB', 'currency_in': 'USD'}
+INFO:root:The trade is starting {'amount': 5.0, 'currency_out': 'BOB', 'currency_in': 'USD'}
+INFO:root:The first trade is done 4.6761
+INFO:root:The second trade is done 34.7872053243
+INFO:root:The trade is done successfully
+INFO:root:The trade is starting {'amount': 5.0, 'currency_out': 'BOB', 'currency_in': 'USD'}
+INFO:root:The trade is done successfully
+INFO:werkzeug:172.17.0.1 - - [05/Jun/2023 19:57:15] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
+INFO:werkzeug:172.17.0.1 - - [05/Jun/2023 19:57:18] "GET /exchanges HTTP/1.1" 200 -

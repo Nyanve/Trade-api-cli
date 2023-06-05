@@ -1,5 +1,6 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
+import logging  
 
 
 from sqlalchemy.exc import SQLAlchemyError
@@ -13,7 +14,7 @@ from models import HistoryModel
 from schemas import UserLogSchema, WalletSchema, TradeSchema
 
 
-from functions import update_deposit_amount, update_wallet, create_trade
+from functions import update_deposit_amount, check_user_funds
 
 
 
@@ -41,9 +42,6 @@ class UserLog(MethodView):
         return user_log, 201
   
 
-        
-
-
 @blp.route("/exchanges/<int:exchange_id>")
 class Wallet(MethodView):
     # This route will return all the wallet funds for a specific user
@@ -56,10 +54,12 @@ class Wallet(MethodView):
     @blp.response(201, WalletSchema)
     def post(self, Wallet_data, exchange_id):
         wallet = WalletModel(**Wallet_data)
-        wallet.exchange_id = exchange_id
+        # get the walues out of the wallet
+        cur_shortcut = Wallet_data.get('cur_shortcut')
+        amount = Wallet_data.get('amount')
 
         try:
-            update_deposit_amount(wallet, exchange_id)
+            update_deposit_amount(cur_shortcut, amount, exchange_id)
         except SQLAlchemyError:
             abort(500, message="An error occurred while updating the deposit in Wallet.")
 
@@ -80,20 +80,10 @@ class UserTrade(MethodView):
     @blp.arguments(TradeSchema)
     @blp.response(201, TradeSchema)
     def post(self, Trade_data, exchange_id):
+        logging.info(f'The trade is starting {Trade_data}') 
         # Check if the user has enough funds in their wallet, this wil automatically deploy Trade if true
-        update_wallet(Trade_data, exchange_id)
-        
-        #     # Create the trade
-        #     trade_result = create_trade(trade.amount, trade.currency_in, trade.currency_out)
-        #     if trade_result:
-        #         try:
-        #             db.session.add(trade)
-        #             db.session.commit()
-        #             return trade_result, 201
-        #         except SQLAlchemyError:
-        #             abort(500, message="An error occurred while creating the trade.")
-        # else:
-        #     abort(400, message="Not enough funds.")
+        return check_user_funds(Trade_data, exchange_id)
+
 
 
 

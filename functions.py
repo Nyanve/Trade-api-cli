@@ -3,6 +3,8 @@ from sqlalchemy.exc import SQLAlchemyError
 import json
 from datetime import datetime
 import requests
+import logging
+
 
 from db import db
 from models import UserLogModel
@@ -12,56 +14,71 @@ from models import HistoryModel
 from schemas import UserLogSchema, WalletSchema
 
 
-
-
-
-def update_deposit_amount(wallet, exchange_id):
-    existing_wallet = WalletModel.query.filter_by(cur_shortcut=wallet.cur_shortcut, exchange_id=exchange_id).first()
+def update_deposit_amount(cur_shortcut, amount, exchange_id):
+    existing_wallet = WalletModel.query.filter_by(cur_shortcut=cur_shortcut, exchange_id=exchange_id).first()
     if existing_wallet:
-        existing_wallet.amount += wallet.amount
+        existing_wallet.amount += amount
     else:
+        wallet = WalletModel(cur_shortcut=cur_shortcut, amount=amount, exchange_id=exchange_id)
         db.session.add(wallet)
 
     db.session.commit()
 
 
-def update_wallet(wallet, exchange_id):
-    existing_wallet = WalletModel.query.filter_by(cur_shortcut=wallet.currency_in, exchange_id=exchange_id).first()
+def check_user_funds(wallet, exchange_id):
+    currency_in = wallet.get('currency_in')
+    amount = wallet.get('amount')
+    existing_wallet = WalletModel.query.filter_by(cur_shortcut=currency_in, exchange_id=exchange_id).first()
     if existing_wallet:
-        if existing_wallet.amount >= wallet.amount:
+        if existing_wallet.amount >= amount:
             # Create a new trade and add it to the History and update the Wallet funds
-            create_trade(wallet, exchange_id)
+            make_trade(wallet, exchange_id)
             # Subtracts used funds 
-            existing_wallet.amount -= wallet.amount
+            logging.info(f'The trade is starting {wallet}')
+            existing_wallet.amount -= amount
+            db.session.commit()
 
             # Check if the wallet amount dropped to zero, then delets the funds
             if existing_wallet.amount == 0:
+                logging.info(f'The funds droped to zero{wallet}')
                 db.session.delete(existing_wallet)
                 db.session.commit()
+            logging.info('The trade is done successfully')
+            calculate_wallet_value(exchange_id)
 
-            return True
         else:
             abort(400, message="Not enough funds.")
     else:
         abort(400, message="You dont own enough funds in this currency.")
     
 
-def create_trade(wallet, exchange_id):
-    # Implement the logic to create a new trade and return currency_out and amount
-    # This is a placeholder and should be replaced with the actual implementation
-
-
-    # except SQLAlchemyError:
-    #                 abort(500, message="An error occurred while creating the trade.")
-
+def make_trade(wallet, exchange_id):
     
-    trade = {
-        'currency_out': 'currency_out',
-        'amount': 'amount'
-    } 
+    logging.info(f'The trade is starting {wallet}')
+    # get the walues out of the wallet it is a dict
+    currency_in = wallet.get('currency_in')
+    currency_out = wallet.get('currency_out')
+    amount = wallet.get('amount')
+
+    logging.info(currency_in, currency_out, amount)
+    
+    # Get the exchange rate from currency_in to EUR
+    cur_to_eur = CurrenciesModel.query.filter_by(cur_shortcut=currency_in).first().cur_to_eur
+    
+    # Calculate the amount in EUR
+    amount_eur = amount * cur_to_eur
+    logging.info(f'The first trade is done {amount_eur}')
+    # Get the exchange rate from EUR to currency_out
+    eur_to_cur = CurrenciesModel.query.filter_by(cur_shortcut=currency_out).first().eur_to_cur
+    
+    # Calculate the amount in currency_out
+    amount_out = amount_eur * eur_to_cur
+    logging.info(f'The second trade is done {amount_out}')
+    
+
     # Update the Wallet funds
-    update_deposit_amount(trade, exchange_id)  
-    return trade
+    update_deposit_amount(currency_out, amount_out, exchange_id)
+    logging.info('The trade is done successfully')
 
 
 def populate_currencies_from_json(json_file_path):
@@ -95,54 +112,62 @@ def populate_currencies_from_json(json_file_path):
     db.session.commit()
 
 
-
 def update_currency_rates():
     # API endpoint base URL
     base_url = 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/'
 
     # Retrieve currency list with EUR as base currency
     eur_data = requests.get(base_url + 'eur.json').json()
-
     # Update currency rates in the table
-   
-    for currency in CurrenciesModel.query.all():
-        cur = currency.cur_shortcut()  # Convert currency code to lowercase
-        if cur in eur_data:
-            currency.eur_to_cur = eur_data[cur]['eur_to_cur']  
 
-            # Retrieve currency value for currency to EUR
+    # Go trought all the currencies in the database and update the rates if needed
+    for currency in CurrenciesModel.query.all():
+        # check if timsstamp is same as today
+        if currency.timestamp.date() == datetime.now().date():
+            continue
+        
+        cur = currency.cur_shortcut.lower()  # Convert currency code to lowercase
+        if cur in eur_data['eur']:
+            currency.eur_to_cur = eur_data["eur"][cur]  
+
+            # Retrieve currency value for currency to EUR')
             cur_to_eur_data = requests.get(base_url + f'{cur}/eur.json').json()
-            currency.cur_to_eur = cur_to_eur_data['cur_to_eur']
+            currency.cur_to_eur = cur_to_eur_data["eur"]
 
             # Update the timestamp
             currency.timestamp = datetime.now()
+            logging.info(f'Updated currency rates for {cur}') 
+            db.session.add(currency)
 
     # Commit the changes to the database
     db.session.commit()
+    return 200
 
 
-# def process_currencies():
-#     # Retrieve all rows from the table
-#     currencies = CurrenciesModel.query.all()
+def calculate_wallet_value(exchange_id):
+    # go trought all the funds in wallet and 
+    # calculate the value of the wallet in EUR
+    wallet_value = 0
+    for wallet in WalletModel.query.filter_by(exchange_id=exchange_id).all():
+        cur = wallet.cur_shortcut
+        cur_to_eur = CurrenciesModel.query.filter_by(cur_shortcut=cur).first().cur_to_eur
+        wallet_value += wallet.amount * cur_to_eur
 
-#     for currency in currencies:
-#         cur_shortcut = currency.cur_shortcut
-        
-#         # Perform actions on the current row
-#         # Example actions:
-        
-#         # 1. Update cur_to_eur and eur_to_cur
-#         currency.cur_to_eur = 1.5  # Set a new value for cur_to_eur
-#         currency.eur_to_cur = 0.67  # Set a new value for eur_to_cur
-        
-#         # 2. Update timestamp
-#         currency.timestamp = datetime.now()  # Set the current timestamp
-        
-#         # 3. Add additional actions here as needed
-        
-#         # Commit the changes to the database
-#         db.session.commit()
-        
-#     return "Currency processing complete."
+    # update the user wallet value
+    currency = UserLogModel.query.filter_by(exchange_id=exchange_id).first().currency
+
+    # calculate the value of the wallet in the user chosen currency.
+    eur_to_cur = CurrenciesModel.query.filter_by(cur_shortcut=currency).first().eur_to_cur
+    wallet_value = wallet_value * eur_to_cur
+
+    # update the user wallet value
+    user = UserLogModel.query.filter_by(exchange_id=exchange_id).first()
+    user.amount = wallet_value
+    db.session.add(user)
+    db.session.commit()
+
+
+
+
+
     
-

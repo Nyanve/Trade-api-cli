@@ -1,4 +1,5 @@
 import os
+import logging
 
 from flask_smorest import Api
 from flask_jwt_extended import JWTManager
@@ -17,6 +18,7 @@ from resources.exchange import blp as ExchangeBlueprint
 
 
 def create_app(db_url=None):
+    logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
     app = Flask(__name__)
     load_dotenv()
 

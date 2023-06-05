@@ -30,8 +30,10 @@ class CurrenciesSchema(Schema):
     eur_to_cur = fields.Float(required=True)
     timestamp = fields.DateTime(required=True)
 
+class CurrenciesUpdateSchema(Schema):
+    cur_shortcut = fields.Str(required=True)
+
 class TradeSchema(Schema): 
-    id = fields.Int(dump_only=True)
     amount = fields.Float(required=True)
     currency_in = fields.Str(required=True)
     currency_out = fields.Str(required=True)
