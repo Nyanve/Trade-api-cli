@@ -26,9 +26,9 @@ class Currencies(MethodView):
     def get(self):
         return CurrenciesModel.query.all()
           
- 
-# Polulate the currencies table with the data from the json file run this route only once when building the database 
+
 @blp.route("/currencies/populate")
+# Polulate the currencies table with the data from the json file run this route only once when building the database
 class PopulateCurrencies(MethodView):
     @blp.response(200, CurrenciesSchema(many=True))
     def get(self):
@@ -36,8 +36,8 @@ class PopulateCurrencies(MethodView):
         return populate_currencies_from_json(json_file_path)
 
 
-# Update the currencies table conversion rates with the data from source, conwersion rates are based on EUR and updated every 24 hours 
 @blp.route("/currencies/update")
+# Update the currencies table conversion rates with the data from source, conwersion rates are based on EUR and updated every 24 hours 
 class UpdateCurrencies(MethodView):
     @blp.response(200)
     def get(self):  

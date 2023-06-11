@@ -14,6 +14,7 @@ import models
 
 from resources.currencies import blp as CurrenciesBlueprint
 from resources.exchange import blp as ExchangeBlueprint
+from resources.history import blp as HistoryBlueprint
 
 
 
@@ -108,6 +109,7 @@ def create_app(db_url=None):
     
     api.register_blueprint(CurrenciesBlueprint)
     api.register_blueprint(ExchangeBlueprint)
+    api.register_blueprint(HistoryBlueprint)
     
     return app
 

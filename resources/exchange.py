@@ -1,5 +1,6 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
+from flask import jsonify
 import logging  
 
 
@@ -11,7 +12,7 @@ from models import UserLogModel
 from models import WalletModel
 from models import CurrenciesModel
 from models import HistoryModel
-from schemas import UserLogSchema, WalletSchema, TradeSchema
+from schemas import UserLogSchema, WalletSchema, TradeSchema, HistorySchema
 
 
 from functions import update_deposit_amount, check_user_funds
@@ -24,6 +25,7 @@ blp = Blueprint("Exchange", "exhange", description="Operations on exchanges.")
 @blp.route("/exchanges")
 class UserLog(MethodView):
     # This route will return all Users in the database with their wallet funds
+    # show also Exchnge_id
     @blp.response(200, UserLogSchema(many=True))
     def get(self):
         return UserLogModel.query.all()
@@ -32,13 +34,26 @@ class UserLog(MethodView):
     @blp.arguments(UserLogSchema)
     @blp.response(201, UserLogSchema)
     def post(self, user_log_data):
+        logging.info(f'The user log data is starting {user_log_data}')
+         # add amount to user_log_data and give it walue0.0 and put it in the user_log
+        user_log_data['amount'] = 0.0
         user_log = UserLogModel(**user_log_data)
-
+        logging.info(f'The user log  {user_log}')
+        # make amount 0.0 and put it in the user_log
+        
+        currency = CurrenciesModel.query.filter_by(cur_shortcut=user_log_data.get('cur_shortcut')).first()
+        if currency is None:
+            abort(409, message="Currency that you chose is not in the database or does not exist.")
+            
         try:
+
             db.session.add(user_log)
             db.session.commit()
+                
         except SQLAlchemyError:
-            abort(500, message="An error occurred while inserting the user log information.")
+            abort(409, message="A user with that username already exists.")
+        
+
         return user_log, 201
   
 
@@ -58,10 +73,22 @@ class Wallet(MethodView):
         cur_shortcut = Wallet_data.get('cur_shortcut')
         amount = Wallet_data.get('amount')
 
+        currency = CurrenciesModel.query.filter_by(cur_shortcut=cur_shortcut).first()
+        if currency is None:
+            abort(409, message="Currency that you chose is not in the database or does not exist.")
+
         try:
             update_deposit_amount(cur_shortcut, amount, exchange_id)
         except SQLAlchemyError:
             abort(500, message="An error occurred while updating the deposit in Wallet.")
+
+    # This route will delete user log with a specific id
+    def delete(self, exchange_id):
+        user_log = UserLogModel.query.get_or_404(exchange_id)
+        db.session.delete(user_log)
+        db.session.commit()
+        return {"message": "User log deleted succesfuly."}
+
 
 
 @blp.route("/exchanges/del/<int:id>")
@@ -82,103 +109,10 @@ class UserTrade(MethodView):
     def post(self, Trade_data, exchange_id):
         logging.info(f'The trade is starting {Trade_data}') 
         # Check if the user has enough funds in their wallet, this wil automatically deploy Trade if true
-        return check_user_funds(Trade_data, exchange_id)
-
-
-
-
-
-
-
-
-    
-
+        trade_data = check_user_funds(Trade_data, exchange_id)
         
-    
+        return jsonify(trade_data), 201
 
 
 
 
-
-
-
-
-
-    # @jwt_required(fresh=True)
-    # @blp.arguments(ItemSchema)
-    # @blp.response(201, ItemSchema)
-    # def post(self, item_data):
-    #     item = ItemModel(**item_data)
-
-    #     try:
-    #         db.session.add(item)
-    #         db.session.commit()
-    #     except SQLAlchemyError:
-    #         abort(500, message="An error occurred while inserting the item.")
-
-    #     return item
-
-# @blp.route("/item/<int:item_id>")
-# class Item(MethodView):
-#     @jwt_required()
-#     @blp.response(200, ItemSchema)
-#     def get(self, item_id):
-#         item = ItemModel.query.get_or_404(item_id)
-#         return item
-
-#     @jwt_required(fresh=True)
-#     def delete(self, item_id):
-#         jwt = get_jwt()
-#         if not jwt.get("is_admin"):
-#             abort(401, message="Admin privilege required.")
-#         item = ItemModel.query.get_or_404(item_id)
-#         db.session.delete(item)
-#         db.session.commit()
-#         return {"message": "Item deleted."}
-
-#     @blp.arguments(ItemUpdateSchema)
-#     @blp.response(200, ItemSchema)
-#     def put(self, item_data, item_id):
-#         item = ItemModel.query.get(item_id)
-#         if item:
-#             item.price = item_data["price"]
-#             item.name = item_data["name"]
-#         else:
-#             item = ItemModel(id=item_id, **item_data)
-
-#         db.session.add(item)
-#         db.session.commit()
-
-#         return item
-
-
-# @blp.route("/item")
-# class ItemList(MethodView):
-#     @jwt_required()
-#     @blp.response(200, ItemSchema(many=True))
-#     def get(self):
-#         return ItemModel.query.all()
-
-#     @jwt_required(fresh=True)
-#     @blp.arguments(ItemSchema)
-#     @blp.response(201, ItemSchema)
-#     def post(self, item_data):
-#         item = ItemModel(**item_data)
-
-#         try:
-#             db.session.add(item)
-#             db.session.commit()
-#         except SQLAlchemyError:
-#             abort(500, message="An error occurred while inserting the item.")
-
-#         return item
-
-
-# @blp.route("/bloklist")
-# class Blocklist(MethodView):
-#     @blp.response(200, BlocklistSchema(many=True))
-#     def get(self):
-#         return BlocklistModel.query.all()
-
-
-    

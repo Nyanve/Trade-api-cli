@@ -15,13 +15,15 @@ from schemas import UserLogSchema, WalletSchema
 
 
 def update_deposit_amount(cur_shortcut, amount, exchange_id):
+    # Check if the user already has funds in this currency
     existing_wallet = WalletModel.query.filter_by(cur_shortcut=cur_shortcut, exchange_id=exchange_id).first()
     if existing_wallet:
         existing_wallet.amount += amount
+    # If not, create a new fund 
     else:
         wallet = WalletModel(cur_shortcut=cur_shortcut, amount=amount, exchange_id=exchange_id)
         db.session.add(wallet)
-
+    calculate_wallet_value(exchange_id)
     db.session.commit()
 
 
@@ -32,61 +34,64 @@ def check_user_funds(wallet, exchange_id):
     if existing_wallet:
         if existing_wallet.amount >= amount:
             # Create a new trade and add it to the History and update the Wallet funds
-            make_trade(wallet, exchange_id)
+            trade_data = make_trade(wallet, exchange_id)
             # Subtracts used funds 
-            logging.info(f'The trade is starting {wallet}')
             existing_wallet.amount -= amount
             db.session.commit()
 
             # Check if the wallet amount dropped to zero, then delets the funds
             if existing_wallet.amount == 0:
-                logging.info(f'The funds droped to zero{wallet}')
                 db.session.delete(existing_wallet)
                 db.session.commit()
-            logging.info('The trade is done successfully')
             calculate_wallet_value(exchange_id)
 
         else:
             abort(400, message="Not enough funds.")
     else:
-        abort(400, message="You dont own enough funds in this currency.")
+        abort(400, message="You dont own funds in this currency.")
+    return trade_data
     
 
 def make_trade(wallet, exchange_id):
-    
-    logging.info(f'The trade is starting {wallet}')
     # get the walues out of the wallet it is a dict
     currency_in = wallet.get('currency_in')
     currency_out = wallet.get('currency_out')
     amount = wallet.get('amount')
-
-    logging.info(currency_in, currency_out, amount)
     
     # Get the exchange rate from currency_in to EUR
     cur_to_eur = CurrenciesModel.query.filter_by(cur_shortcut=currency_in).first().cur_to_eur
-    
     # Calculate the amount in EUR
     amount_eur = amount * cur_to_eur
-    logging.info(f'The first trade is done {amount_eur}')
+
     # Get the exchange rate from EUR to currency_out
     eur_to_cur = CurrenciesModel.query.filter_by(cur_shortcut=currency_out).first().eur_to_cur
-    
     # Calculate the amount in currency_out
     amount_out = amount_eur * eur_to_cur
-    logging.info(f'The second trade is done {amount_out}')
-    
+    logging.info(f'The amount out is {amount_out}')
 
+    # Add the trade to the History
+    logging.info(f'The trade is starting {amount} {currency_in} {currency_out} {exchange_id} ')
+    history = HistoryModel(amount=amount, currency_in=currency_in, currency_out=currency_out, exchange_id=exchange_id, timestamp=datetime.now())
+    db.session.add(history)
+    db.session.commit()
+    
     # Update the Wallet funds
     update_deposit_amount(currency_out, amount_out, exchange_id)
-    logging.info('The trade is done successfully')
+    # change the amount_out to string
+    
+
+    trade_data = {'amount_out': amount_out, 'currency_out': currency_out}
+    return trade_data
+
 
 
 def populate_currencies_from_json(json_file_path):
+    # Load data from JSON file
     with open(json_file_path, encoding='utf-8') as file:
         data = json.load(file)
 
+    # Go through all the currencies in the JSON file and add them to the list 
     currencies = []
-
     for currency_code, currency_data in data.items():
         name = currency_data['name']
         code = currency_data['code']
@@ -97,7 +102,7 @@ def populate_currencies_from_json(json_file_path):
             'cur_shortcut': code,
             'symbol': symbol_native
         })
-
+    # Add the currencies to the database
     for currency in currencies:
         currency['cur_shortcut'] = CurrenciesModel(
             cur_name=currency['cur_name'],
@@ -136,17 +141,21 @@ def update_currency_rates():
 
             # Update the timestamp
             currency.timestamp = datetime.now()
-            logging.info(f'Updated currency rates for {cur}') 
             db.session.add(currency)
 
     # Commit the changes to the database
     db.session.commit()
+    return {'message': 'Currency rates updated successfully.'}, 200
+
+    # Update the wallet value for all users
+    for user in UserLogModel.query.all():
+        calculate_wallet_value(user.exchange_id)
+
     return 200
 
 
 def calculate_wallet_value(exchange_id):
-    # go trought all the funds in wallet and 
-    # calculate the value of the wallet in EUR
+    # go trought all the funds in wallet and calculate the value of the wallet in EUR 
     wallet_value = 0
     for wallet in WalletModel.query.filter_by(exchange_id=exchange_id).all():
         cur = wallet.cur_shortcut
@@ -165,7 +174,6 @@ def calculate_wallet_value(exchange_id):
     user.amount = wallet_value
     db.session.add(user)
     db.session.commit()
-
 
 
 

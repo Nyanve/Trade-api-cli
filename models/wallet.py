@@ -5,7 +5,7 @@ class WalletModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     cur_shortcut = db.Column(db.String(3), nullable=False)
-    amount = db.Column(db.Float)
+    amount = db.Column(db.Float(precision=10))
     exchange_id = db.Column(db.Integer, db.ForeignKey('user_log.exchange_id'))
 
     user_log = db.relationship("UserLogModel", back_populates="wallet")

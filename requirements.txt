@@ -7,3 +7,4 @@ python-dotenv
 flask-migrate
 flask==2.2.4
 requests
+click

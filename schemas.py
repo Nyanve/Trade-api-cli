@@ -2,10 +2,10 @@ from marshmallow import Schema, fields
 
 
 class PlainUserLogSchema(Schema):
-    id = fields.Int(dump_only=True)
+    exchange_id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
     currency = fields.Str(required=True)
-    amount = fields.Float(required=True)
+    amount = fields.Float()
 
 class PlainWalletSchema(Schema):
     id = fields.Int(dump_only=True)
@@ -20,6 +20,16 @@ class HistorySchema(Schema):
     currency_out = fields.Str(required=True)
     exchange_id = fields.Int(required=True, load_only=True)
     timestamp = fields.DateTime(required=True)
+
+class SearchHistorySchema(Schema):
+    offset = fields.Int()
+    limit = fields.Int()
+    exchange_id = fields.Int()
+    search = fields.Str()
+    date_from = fields.Date()
+    date_to = fields.Date()
+    
+
 
 class CurrenciesSchema(Schema):
     id = fields.Int(dump_only=True)
