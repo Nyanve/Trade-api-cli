@@ -4,7 +4,7 @@ from flask import jsonify
 import logging  
 
 
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, NoResultFound
 
 
 from db import db
@@ -25,7 +25,6 @@ blp = Blueprint("Exchange", "exhange", description="Operations on exchanges.")
 @blp.route("/exchanges")
 class UserLog(MethodView):
     # This route will return all Users in the database with their wallet funds
-    # show also Exchnge_id
     @blp.response(200, UserLogSchema(many=True))
     def get(self):
         return UserLogModel.query.all()
@@ -35,16 +34,24 @@ class UserLog(MethodView):
     @blp.response(201, UserLogSchema)
     def post(self, user_log_data):
         logging.info(f'The user log data is starting {user_log_data}')
-         # add amount to user_log_data and give it walue0.0 and put it in the user_log
+        # get the currency shortcut from the user_log_data
+        cur_shortcut = user_log_data['currency']
+        
+        # add amount to user_log_data and give it walue0.0 and put it in the user_log
         user_log_data['amount'] = 0.0
         user_log = UserLogModel(**user_log_data)
         logging.info(f'The user log  {user_log}')
         # make amount 0.0 and put it in the user_log
+    
         
-        currency = CurrenciesModel.query.filter_by(cur_shortcut=user_log_data.get('cur_shortcut')).first()
-        if currency is None:
+        try:
+            logging.info(f'The exchange data is starting {cur_shortcut}')
+            currency = CurrenciesModel.query.filter_by(cur_shortcut=cur_shortcut).first()
+            if currency is None:
+                raise NoResultFound
+        except NoResultFound:
             abort(409, message="Currency that you chose is not in the database or does not exist.")
-            
+
         try:
 
             db.session.add(user_log)
@@ -72,9 +79,16 @@ class Wallet(MethodView):
         # get the walues out of the wallet
         cur_shortcut = Wallet_data.get('cur_shortcut')
         amount = Wallet_data.get('amount')
+        
+        # check if the amount is positive
+        if amount <= 0:
+            abort(400, message="The amount must be positive.")
 
-        currency = CurrenciesModel.query.filter_by(cur_shortcut=cur_shortcut).first()
-        if currency is None:
+        try:
+            currency = CurrenciesModel.query.filter_by(cur_shortcut=cur_shortcut).first()
+            if currency is None:
+                raise NoResultFound
+        except NoResultFound:
             abort(409, message="Currency that you chose is not in the database or does not exist.")
 
         try:

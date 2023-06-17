@@ -1,385 +1,254 @@
-INFO:root:The trade is starting {'currency_in': 'USD', 'amount': 1.0, 'currency_out': 'BTC'}
-INFO:root:The trade is starting 1.0 USD BTC 1 
-INFO:root:The trade is {'amount_out': 3.740880000000001e-05, 'currency_out': 'BTC'}
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 07:56:27] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 07:56:49] "GET /exchanges HTTP/1.1" 200 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 07:56:55] "GET /exchanges/history_log HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'search': 'EUR', 'limit': 2}
-INFO:root:exchange_id None
-INFO:root:offset 0
-INFO:root:limit 2
-INFO:root:search EUR
-INFO:root:date_from None
-INFO:root:date_to None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 07:57:03] "GET /exchanges/history?limit=2&search=EUR HTTP/1.1" 200 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_in': 'USD', 'amount': 1.0, 'currency_out': 'EUR'}
-INFO:root:The trade is starting 1.0 USD EUR 1 
-INFO:root:The trade is {'amount_out': 0.93522, 'currency_out': 'EUR'}
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 07:57:59] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'amount': 1.0, 'currency_out': 'EUR', 'currency_in': 'USD'}
-INFO:root:The trade is starting 1.0 USD EUR 1 
-INFO:root:The trade is {'amount_out': 0.93522, 'currency_out': 'EUR'}
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 07:58:47] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'amount': 1.0, 'currency_out': 'EUR', 'currency_in': 'USD'}
-INFO:root:The trade is starting 1.0 USD EUR 1 
-INFO:root:The trade is {'amount_out': 0.93522, 'currency_out': 'EUR'}
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:09:34] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
+INFO:root:Setting up database
+INFO:root:The user log data is starting {'currency': 'BTC', 'name': 'Tatosa'}
+INFO:root:The user log  <UserLogModel (transient 140603171426640)>
+INFO:root:The exchange data is starting BTC
+INFO:werkzeug:172.17.0.1 - - [17/Jun/2023 10:43:56] "[35m[1mPOST /exchanges HTTP/1.1[0m" 201 -
+INFO:root:The wallet data is starting GNF 1.9e+16 1
+INFO:root:Calculating wallet value for user with exchange_id 1.
+INFO:werkzeug:172.17.0.1 - - [17/Jun/2023 10:44:04] "[35m[1mPOST /exchanges/1 HTTP/1.1[0m" 201 -
+INFO:werkzeug:172.17.0.1 - - [17/Jun/2023 10:44:07] "GET /exchanges HTTP/1.1" 200 -
 INFO:werkzeug: * Detected change in '/app/functions.py', reloading
 INFO:werkzeug: * Restarting with stat
 WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_out': 'EUR', 'currency_in': 'USD', 'amount': 1.0}
-INFO:root:The amount out is 0.93522
-INFO:root:The trade is starting 1.0 USD EUR 1 
-INFO:root:The trade is {'amount_out': 0.93522, 'currency_out': 'EUR'}
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:11:25] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/resources/exchange.py', reloading
+INFO:werkzeug: * Debugger PIN: 138-867-528
+INFO:root:Setting up database
+INFO:root:The wallet data is starting CZK 190.0 1
+INFO:root:Calculating wallet value for user with exchange_id 1.
+INFO:werkzeug:172.17.0.1 - - [17/Jun/2023 10:45:21] "[35m[1mPOST /exchanges/1 HTTP/1.1[0m" 201 -
+INFO:werkzeug: * Detected change in '/app/app.py', reloading
 INFO:werkzeug: * Restarting with stat
 WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_out': 'EUR', 'amount': 1.0, 'currency_in': 'USD'}
-INFO:root:The amount out is 0.93522
-INFO:root:The trade is starting 1.0 USD EUR 1 
-INFO:root:The trade is {'amount_out': 0.93522, 'currency_out': 'EUR'}
-INFO:root:The trade is created 0.93522 EUR
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:13:38] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:root:The trade is starting {'currency_out': 'EUR', 'amount': 2.0, 'currency_in': 'USD'}
-INFO:root:The amount out is 1.87044
-INFO:root:The trade is starting 2.0 USD EUR 1 
-INFO:root:The trade is {'amount_out': 1.87044, 'currency_out': 'EUR'}
-INFO:root:The trade is created 1.87044 EUR
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:15:08] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_out': 'EUR', 'amount': 2.0, 'currency_in': 'USD'}
-INFO:root:The amount out is 1.87044
-INFO:root:The trade is starting 2.0 USD EUR 1 
-INFO:root:The trade is {'amount_out': 1.87044, 'currency_out': 'EUR'}
-INFO:root:The trade is created 1.87044 EUR
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:16:03] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'offset': 0, 'limit': 100, 'date_from': datetime.date(2023, 6, 1), 'date_to': datetime.date(2023, 6, 9), 'search': 'USD', 'exchange_id': 1}
-INFO:root:exchange_id 1
-INFO:root:offset 0
-INFO:root:limit 100
-INFO:root:search USD
-INFO:root:date_from 2023-06-01
-INFO:root:date_to 2023-06-09
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:27:54] "GET /exchanges/history?offset=0&limit=100&exchange_id=1&search=USD&date_from=2023-06-01&date_to=2023-06-09 HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'offset': 0, 'limit': 8, 'date_from': datetime.date(2023, 6, 1), 'date_to': datetime.date(2023, 6, 9), 'search': 'USD', 'exchange_id': 1}
-INFO:root:exchange_id 1
-INFO:root:offset 0
-INFO:root:limit 8
-INFO:root:search USD
-INFO:root:date_from 2023-06-01
-INFO:root:date_to 2023-06-09
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:44:28] "GET /exchanges/history?offset=0&limit=8&exchange_id=1&search=USD&date_from=2023-06-01&date_to=2023-06-09 HTTP/1.1" 200 -
+INFO:werkzeug: * Debugger PIN: 138-867-528
+INFO:root:Setting up database
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): cdn.jsdelivr.net:443
+DEBUG:urllib3.connectionpool:https://cdn.jsdelivr.net:443 "GET /gh/fawazahmed0/currency-api@1/latest/currencies/eur.json HTTP/1.1" 200 2530
+INFO:root:Updating currency rates in the database jv.
+INFO:root:Updating currency rates for <CurrenciesModel 1>.
+INFO:root:Updating currency rates for <CurrenciesModel 2>.
+INFO:root:Updating currency rates for <CurrenciesModel 3>.
+INFO:root:Updating currency rates for <CurrenciesModel 4>.
+INFO:root:Updating currency rates for <CurrenciesModel 5>.
+INFO:root:Updating currency rates for <CurrenciesModel 6>.
+INFO:root:Updating currency rates for <CurrenciesModel 7>.
+INFO:root:Updating currency rates for <CurrenciesModel 8>.
+INFO:root:Updating currency rates for <CurrenciesModel 9>.
+INFO:root:Updating currency rates for <CurrenciesModel 10>.
+INFO:root:Updating currency rates for <CurrenciesModel 11>.
+INFO:root:Updating currency rates for <CurrenciesModel 12>.
+INFO:root:Updating currency rates for <CurrenciesModel 13>.
+INFO:root:Updating currency rates for <CurrenciesModel 14>.
+INFO:root:Updating currency rates for <CurrenciesModel 15>.
+INFO:root:Updating currency rates for <CurrenciesModel 16>.
+INFO:root:Updating currency rates for <CurrenciesModel 17>.
+INFO:root:Updating currency rates for <CurrenciesModel 18>.
+INFO:root:Updating currency rates for <CurrenciesModel 19>.
+INFO:root:Updating currency rates for <CurrenciesModel 20>.
+INFO:root:Updating currency rates for <CurrenciesModel 21>.
+INFO:root:Updating currency rates for <CurrenciesModel 22>.
+INFO:root:Updating currency rates for <CurrenciesModel 23>.
+INFO:root:Updating currency rates for <CurrenciesModel 24>.
+INFO:root:Updating currency rates for <CurrenciesModel 25>.
+INFO:root:Updating currency rates for <CurrenciesModel 26>.
+INFO:root:Updating currency rates for <CurrenciesModel 27>.
+INFO:root:Updating currency rates for <CurrenciesModel 28>.
+INFO:root:Updating currency rates for <CurrenciesModel 29>.
+INFO:root:Updating currency rates for <CurrenciesModel 30>.
+INFO:root:Updating currency rates for <CurrenciesModel 31>.
+INFO:root:Updating currency rates for <CurrenciesModel 32>.
+INFO:root:Updating currency rates for <CurrenciesModel 33>.
+INFO:root:Updating currency rates for <CurrenciesModel 34>.
+INFO:root:Updating currency rates for <CurrenciesModel 35>.
+INFO:root:Updating currency rates for <CurrenciesModel 36>.
+INFO:root:Updating currency rates for <CurrenciesModel 37>.
+INFO:root:Updating currency rates for <CurrenciesModel 38>.
+INFO:root:Updating currency rates for <CurrenciesModel 39>.
+INFO:root:Updating currency rates for <CurrenciesModel 40>.
+INFO:root:Updating currency rates for <CurrenciesModel 41>.
+INFO:root:Updating currency rates for <CurrenciesModel 42>.
+INFO:root:Updating currency rates for <CurrenciesModel 43>.
+INFO:root:Updating currency rates for <CurrenciesModel 44>.
+INFO:root:Updating currency rates for <CurrenciesModel 45>.
+INFO:root:Updating currency rates for <CurrenciesModel 46>.
+INFO:root:Updating currency rates for <CurrenciesModel 47>.
+INFO:root:Updating currency rates for <CurrenciesModel 48>.
+INFO:root:Updating currency rates for <CurrenciesModel 49>.
+INFO:root:Updating currency rates for <CurrenciesModel 50>.
+INFO:root:Updating currency rates for <CurrenciesModel 51>.
+INFO:root:Updating currency rates for <CurrenciesModel 52>.
+INFO:root:Updating currency rates for <CurrenciesModel 53>.
+INFO:root:Updating currency rates for <CurrenciesModel 54>.
+INFO:root:Updating currency rates for <CurrenciesModel 55>.
+INFO:root:Updating currency rates for <CurrenciesModel 56>.
+INFO:root:Updating currency rates for <CurrenciesModel 57>.
+INFO:root:Updating currency rates for <CurrenciesModel 58>.
+INFO:root:Updating currency rates for <CurrenciesModel 59>.
+INFO:root:Updating currency rates for <CurrenciesModel 60>.
+INFO:root:Updating currency rates for <CurrenciesModel 61>.
+INFO:root:Updating currency rates for <CurrenciesModel 62>.
+INFO:root:Updating currency rates for <CurrenciesModel 63>.
+INFO:root:Updating currency rates for <CurrenciesModel 64>.
+INFO:root:Updating currency rates for <CurrenciesModel 65>.
+INFO:root:Updating currency rates for <CurrenciesModel 66>.
+INFO:root:Updating currency rates for <CurrenciesModel 67>.
+INFO:root:Updating currency rates for <CurrenciesModel 68>.
+INFO:root:Updating currency rates for <CurrenciesModel 69>.
+INFO:root:Updating currency rates for <CurrenciesModel 70>.
+INFO:root:Updating currency rates for <CurrenciesModel 71>.
+INFO:root:Updating currency rates for <CurrenciesModel 72>.
+INFO:root:Updating currency rates for <CurrenciesModel 73>.
+INFO:root:Updating currency rates for <CurrenciesModel 74>.
+INFO:root:Updating currency rates for <CurrenciesModel 75>.
+INFO:root:Updating currency rates for <CurrenciesModel 76>.
+INFO:root:Updating currency rates for <CurrenciesModel 77>.
+INFO:root:Updating currency rates for <CurrenciesModel 78>.
+INFO:root:Updating currency rates for <CurrenciesModel 79>.
+INFO:root:Updating currency rates for <CurrenciesModel 80>.
+INFO:root:Updating currency rates for <CurrenciesModel 81>.
+INFO:root:Updating currency rates for <CurrenciesModel 82>.
+INFO:root:Updating currency rates for <CurrenciesModel 83>.
+INFO:root:Updating currency rates for <CurrenciesModel 84>.
+INFO:root:Updating currency rates for <CurrenciesModel 85>.
+INFO:root:Updating currency rates for <CurrenciesModel 86>.
+INFO:root:Updating currency rates for <CurrenciesModel 87>.
+INFO:root:Updating currency rates for <CurrenciesModel 88>.
+INFO:root:Updating currency rates for <CurrenciesModel 89>.
+INFO:root:Updating currency rates for <CurrenciesModel 90>.
+INFO:root:Updating currency rates for <CurrenciesModel 91>.
+INFO:root:Updating currency rates for <CurrenciesModel 92>.
+INFO:root:Updating currency rates for <CurrenciesModel 93>.
+INFO:root:Updating currency rates for <CurrenciesModel 94>.
+INFO:root:Updating currency rates for <CurrenciesModel 95>.
+INFO:root:Updating currency rates for <CurrenciesModel 96>.
+INFO:root:Updating currency rates for <CurrenciesModel 97>.
+INFO:root:Updating currency rates for <CurrenciesModel 98>.
+INFO:root:Updating currency rates for <CurrenciesModel 99>.
+INFO:root:Updating currency rates for <CurrenciesModel 100>.
+INFO:root:Updating currency rates for <CurrenciesModel 101>.
+INFO:root:Updating currency rates for <CurrenciesModel 102>.
+INFO:root:Updating currency rates for <CurrenciesModel 103>.
+INFO:root:Updating currency rates for <CurrenciesModel 104>.
+INFO:root:Updating currency rates for <CurrenciesModel 105>.
+INFO:root:Updating currency rates for <CurrenciesModel 106>.
+INFO:root:Updating currency rates for <CurrenciesModel 107>.
+INFO:root:Updating currency rates for <CurrenciesModel 108>.
+INFO:root:Updating currency rates for <CurrenciesModel 109>.
+INFO:root:Updating currency rates for <CurrenciesModel 110>.
+INFO:root:Updating currency rates for <CurrenciesModel 111>.
+INFO:root:Updating currency rates for <CurrenciesModel 112>.
+INFO:root:Updating currency rates for <CurrenciesModel 113>.
+INFO:root:Updating currency rates for <CurrenciesModel 114>.
+INFO:root:Updating currency rates for <CurrenciesModel 115>.
+INFO:root:Updating currency rates for <CurrenciesModel 116>.
+INFO:root:Updating currency rates for <CurrenciesModel 117>.
+INFO:root:Updating currency rates for <CurrenciesModel 118>.
+INFO:root:Updating currency rates for <CurrenciesModel 119>.
+INFO:root:Updating currency rates for <CurrenciesModel 120>.
+INFO:root:Updating currency rates for <CurrenciesModel 121>.
+INFO:root:Updating currency rates for <CurrenciesModel 122>.
+INFO:root:Updating currency rates for <CurrenciesModel 123>.
+INFO:root:Updating currency rates for <CurrenciesModel 124>.
+INFO:root:Updating currency rates for <CurrenciesModel 125>.
+INFO:root:Updating currency rates for <CurrenciesModel 126>.
+INFO:root:Updating currency rates for <CurrenciesModel 127>.
+INFO:root:Updating currency rates for <CurrenciesModel 128>.
+INFO:root:Updating currency rates for <CurrenciesModel 129>.
+INFO:root:Updating currency rates for <CurrenciesModel 130>.
+INFO:root:Updating currency rates for <CurrenciesModel 131>.
+INFO:root:Updating currency rates for <CurrenciesModel 132>.
+INFO:root:Updating currency rates for <CurrenciesModel 133>.
+INFO:root:Updating currency rates for <CurrenciesModel 134>.
+INFO:root:Updating currency rates for <CurrenciesModel 135>.
+INFO:root:Updating currency rates for <CurrenciesModel 136>.
+INFO:root:Updating currency rates for <CurrenciesModel 137>.
+INFO:root:Updating currency rates for <CurrenciesModel 138>.
+INFO:root:Updating currency rates for <CurrenciesModel 139>.
+INFO:root:Updating currency rates for <CurrenciesModel 140>.
+INFO:root:Updating currency rates for <CurrenciesModel 141>.
+INFO:root:Updating currency rates for <CurrenciesModel 142>.
+INFO:root:Updating currency rates for <CurrenciesModel 143>.
+INFO:root:Updating currency rates for <CurrenciesModel 144>.
+INFO:root:Updating currency rates for <CurrenciesModel 145>.
+INFO:root:Updating currency rates for <CurrenciesModel 146>.
+INFO:root:Updating currency rates for <CurrenciesModel 147>.
+INFO:root:Updating currency rates for <CurrenciesModel 148>.
+INFO:root:Updating currency rates for <CurrenciesModel 149>.
+INFO:root:Updating currency rates for <CurrenciesModel 150>.
+INFO:root:Updating currency rates for <CurrenciesModel 151>.
+INFO:root:Updating currency rates for <CurrenciesModel 152>.
+INFO:root:Updating currency rates for <CurrenciesModel 153>.
+INFO:root:Updating currency rates for <CurrenciesModel 154>.
+INFO:root:Updating currency rates for <CurrenciesModel 155>.
+INFO:root:Updating currency rates for <CurrenciesModel 156>.
+INFO:root:Updating currency rates for <CurrenciesModel 157>.
+INFO:root:Updating currency rates for <CurrenciesModel 158>.
+INFO:root:Updating currency rates for <CurrenciesModel 159>.
+INFO:root:Updating currency rates for <CurrenciesModel 160>.
+INFO:root:Updating currency rates for <CurrenciesModel 161>.
+INFO:root:Updating currency rates for <CurrenciesModel 162>.
+INFO:root:Updating currency rates for <CurrenciesModel 163>.
+INFO:root:Updating currency rates for <CurrenciesModel 164>.
+INFO:root:Updating currency rates for <CurrenciesModel 165>.
+INFO:root:Updating currency rates for <CurrenciesModel 166>.
+INFO:root:Updating currency rates for <CurrenciesModel 167>.
+INFO:root:Updating currency rates for <CurrenciesModel 168>.
+INFO:root:Updating currency rates for <CurrenciesModel 169>.
+INFO:root:Updating currency rates for <CurrenciesModel 170>.
+INFO:root:Updating currency rates for <CurrenciesModel 171>.
+INFO:root:Updating currency rates for <CurrenciesModel 172>.
+INFO:root:Updating currency rates for <CurrenciesModel 173>.
+INFO:root:Updating currency rates for <CurrenciesModel 174>.
+INFO:root:Updating currency rates for <CurrenciesModel 175>.
+INFO:root:Updating currency rates for <CurrenciesModel 176>.
+INFO:root:Updating currency rates for <CurrenciesModel 177>.
+INFO:root:Updating currency rates for <CurrenciesModel 178>.
+INFO:root:Updating currency rates for <CurrenciesModel 179>.
+INFO:root:Updating currency rates for <CurrenciesModel 180>.
+INFO:root:Updating currency rates for <CurrenciesModel 181>.
+INFO:root:Updating currency rates for <CurrenciesModel 182>.
+INFO:root:Updating currency rates for <CurrenciesModel 183>.
+INFO:root:Updating currency rates for <CurrenciesModel 184>.
+INFO:root:Updating currency rates for <CurrenciesModel 185>.
+INFO:root:Updating currency rates for <CurrenciesModel 186>.
+INFO:root:Updating currency rates for <CurrenciesModel 187>.
+INFO:root:Updating currency rates for <CurrenciesModel 188>.
+INFO:root:Updating currency rates for <CurrenciesModel 189>.
+INFO:root:Updating currency rates for <CurrenciesModel 190>.
+INFO:root:Updating currency rates for <CurrenciesModel 191>.
+INFO:root:Updating currency rates for <CurrenciesModel 192>.
+INFO:root:Updating currency rates for <CurrenciesModel 193>.
+INFO:root:Updating currency rates for <CurrenciesModel 194>.
+INFO:root:Updating currency rates for <CurrenciesModel 195>.
+INFO:root:Updating currency rates for <CurrenciesModel 196>.
+INFO:root:Updating currency rates for <CurrenciesModel 197>.
+INFO:root:Updating currency rates for <CurrenciesModel 198>.
+INFO:root:Updating currency rates for <CurrenciesModel 199>.
+INFO:root:Updating currency rates for <CurrenciesModel 200>.
+INFO:root:Updating currency rates for <CurrenciesModel 201>.
+INFO:root:Updating currency rates for <CurrenciesModel 202>.
+INFO:root:Updating currency rates for <CurrenciesModel 203>.
+INFO:root:Updating currency rates for <CurrenciesModel 204>.
+INFO:root:Updating currency rates for <CurrenciesModel 205>.
+INFO:root:Updating currency rates for <CurrenciesModel 206>.
+INFO:root:Updating currency rates for <CurrenciesModel 207>.
+INFO:root:Updating currency rates for <CurrenciesModel 208>.
+INFO:root:Updating currency rates for <CurrenciesModel 209>.
+INFO:root:Updating currency rates for <CurrenciesModel 210>.
+INFO:root:Updating currency rates for <CurrenciesModel 211>.
+INFO:root:Updating currency rates for <CurrenciesModel 212>.
+INFO:root:Updating currency rates for <CurrenciesModel 213>.
+INFO:root:Updating currency rates for <CurrenciesModel 214>.
+INFO:root:Updating currency rates for <CurrenciesModel 215>.
+INFO:root:Updating currency rates for <CurrenciesModel 216>.
+INFO:root:Updating currency rates for <CurrenciesModel 217>.
+INFO:root:Updating currency rates for <CurrenciesModel 218>.
+INFO:root:Updating currency rates for <CurrenciesModel 219>.
+INFO:root:Updating currency rates for <CurrenciesModel 220>.
+INFO:root:Updating currency rates for <CurrenciesModel 221>.
+INFO:root:Updating currency rates for <CurrenciesModel 222>.
+INFO:root:Updating currency rates for <CurrenciesModel 223>.
+INFO:root:Updating currency rates for <CurrenciesModel 224>.
+INFO:root:Calculating wallet value for user with exchange_id 1.
+INFO:werkzeug:172.17.0.1 - - [17/Jun/2023 10:46:51] "GET /currencies HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [17/Jun/2023 10:49:06] "GET /exchanges HTTP/1.1" 200 -
 INFO:werkzeug: * Detected change in '/app/functions.py', reloading
 INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:HistorySearch get begun
-INFO:root:args {'search': 'USD', 'limit': 8, 'date_from': datetime.date(2023, 6, 1), 'exchange_id': 1, 'date_to': datetime.date(2023, 6, 9), 'offset': 0}
-INFO:root:exchange_id 1
-INFO:root:offset 0
-INFO:root:limit 8
-INFO:root:search USD
-INFO:root:date_from 2023-06-01
-INFO:root:date_to 2023-06-09
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:44:36] "GET /exchanges/history?offset=0&limit=8&exchange_id=1&search=USD&date_from=2023-06-01&date_to=2023-06-09 HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'search': 'USD', 'limit': 8, 'date_from': datetime.date(2023, 6, 1), 'exchange_id': 1, 'date_to': datetime.date(2023, 6, 9), 'offset': 10}
-INFO:root:exchange_id 1
-INFO:root:offset 10
-INFO:root:limit 8
-INFO:root:search USD
-INFO:root:date_from 2023-06-01
-INFO:root:date_to 2023-06-09
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:44:56] "GET /exchanges/history?offset=10&limit=8&exchange_id=1&search=USD&date_from=2023-06-01&date_to=2023-06-09 HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'search': 'USD', 'limit': 8, 'date_from': datetime.date(2023, 6, 1), 'exchange_id': 1, 'date_to': datetime.date(2023, 6, 9), 'offset': 4}
-INFO:root:exchange_id 1
-INFO:root:offset 4
-INFO:root:limit 8
-INFO:root:search USD
-INFO:root:date_from 2023-06-01
-INFO:root:date_to 2023-06-09
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:45:21] "GET /exchanges/history?offset=4&limit=8&exchange_id=1&search=USD&date_from=2023-06-01&date_to=2023-06-09 HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'search': 'USD', 'limit': 8, 'exchange_id': 1, 'offset': 4}
-INFO:root:exchange_id 1
-INFO:root:offset 4
-INFO:root:limit 8
-INFO:root:search USD
-INFO:root:date_from None
-INFO:root:date_to None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:48:34] "GET /exchanges/history?offset=4&limit=8&exchange_id=1&search=USD HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'search': 'USD', 'limit': 10, 'offset': 0}
-INFO:root:exchange_id None
-INFO:root:offset 0
-INFO:root:limit 10
-INFO:root:search USD
-INFO:root:date_from None
-INFO:root:date_to None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:48:52] "GET /exchanges/history?offset=0&limit=10&search=USD HTTP/1.1" 200 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:HistorySearch get begun
-INFO:root:args {'limit': 20, 'search': 'USD', 'offset': 0}
-INFO:root:exchange_id None
-INFO:root:offset 0
-INFO:root:limit 20
-INFO:root:search USD
-INFO:root:date_from None
-INFO:root:date_to None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:49:11] "GET /exchanges/history?offset=0&limit=20&search=USD HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'exchange_id': 2, 'limit': 20, 'offset': 0}
-INFO:root:exchange_id 2
-INFO:root:offset 0
-INFO:root:limit 20
-INFO:root:search None
-INFO:root:date_from None
-INFO:root:date_to None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:56:53] "GET /exchanges/history?offset=0&limit=20&exchange_id=2 HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'exchange_id': 3, 'limit': 20, 'offset': 0}
-INFO:root:exchange_id 3
-INFO:root:offset 0
-INFO:root:limit 20
-INFO:root:search None
-INFO:root:date_from None
-INFO:root:date_to None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:56:59] "GET /exchanges/history?offset=0&limit=20&exchange_id=3 HTTP/1.1" 200 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:57:04] "GET /exchanges HTTP/1.1" 200 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:57:10] "GET /exchanges HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'exchange_id': 3, 'limit': 20, 'offset': 0}
-INFO:root:exchange_id 3
-INFO:root:offset 0
-INFO:root:limit 20
-INFO:root:search None
-INFO:root:date_from None
-INFO:root:date_to None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:57:16] "GET /exchanges/history?offset=0&limit=20&exchange_id=3 HTTP/1.1" 200 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:57:26] "GET /exchanges/history_log HTTP/1.1" 200 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:57:54] "GET /exchanges HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'exchange_id': 1, 'limit': 20, 'offset': 0}
-INFO:root:exchange_id 1
-INFO:root:offset 0
-INFO:root:limit 20
-INFO:root:search None
-INFO:root:date_from None
-INFO:root:date_to None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:58:05] "GET /exchanges/history?offset=0&limit=20&exchange_id=1 HTTP/1.1" 200 -
-INFO:root:HistorySearch get begun
-INFO:root:args {'exchange_id': 1, 'limit': 20, 'offset': 10}
-INFO:root:exchange_id 1
-INFO:root:offset 10
-INFO:root:limit 20
-INFO:root:search None
-INFO:root:date_from None
-INFO:root:date_to None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 08:58:25] "GET /exchanges/history?offset=10&limit=20&exchange_id=1 HTTP/1.1" 200 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:09:31] "[35m[1mPOST /exchanges/1 HTTP/1.1[0m" 201 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:09:38] "GET /exchanges HTTP/1.1" 200 -
-INFO:root:The trade is starting {'currency_in': 'USD', 'currency_out': 'LVL', 'amount': 5.0}
-INFO:root:The amount out is 3.0244500429
-INFO:root:The trade is starting 5.0 USD LVL 1 
-INFO:root:The trade is {'amount_out': 3.0244500429, 'currency_out': 'LVL'}
-INFO:root:The trade is created 3.0244500429 LVL
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:13:06] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/resources/exchange.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_in': 'USD', 'amount': 5.0, 'currency_out': 'LVL'}
-INFO:root:The amount out is 3.0244500429
-INFO:root:The trade is starting 5.0 USD LVL 1 
-INFO:root:The trade is {'amount_out': 3.0244500429, 'currency_out': 'LVL'}
-INFO:root:The trade is created 3.0244500429 LVL
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:15:45] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 500 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:15:46] "[36mGET /exchanges/1/trades?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:15:46] "[36mGET /exchanges/1/trades?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:15:46] "[36mGET /exchanges/1/trades?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
-INFO:root:The trade is starting {'currency_in': 'USD', 'amount': 5.0, 'currency_out': 'LVL'}
-INFO:root:The amount out is 3.0244500429
-INFO:root:The trade is starting 5.0 USD LVL 1 
-INFO:root:The trade is {'amount_out': 3.0244500429, 'currency_out': 'LVL'}
-INFO:root:The trade is created 3.0244500429 LVL
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:16:12] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 500 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:16:12] "[36mGET /exchanges/1/trades?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:16:12] "[36mGET /exchanges/1/trades?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:16:12] "[36mGET /exchanges/1/trades?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'amount': 100.0, 'currency_in': 'USD', 'currency_out': 'BTC'}
-INFO:root:The amount out is 0.0037408800000000007
-INFO:root:The trade is starting 100.0 USD BTC 1 
-INFO:root:The trade is {'amount_out': 0.0037408800000000007, 'currency_out': 'BTC'}
-INFO:root:The trade is created 0.0037408800000000007 BTC
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:19:05] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/functions.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_in': 'USD', 'amount': 5.0, 'currency_out': 'LVL'}
-INFO:root:The amount out is 3.0244500429
-INFO:root:The trade is starting 5.0 USD LVL 1 
-INFO:root:The trade is {'amount_out': 3.0244500429}
-INFO:root:The trade is created 3.0244500429 None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:44:34] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:root:The trade is starting {'currency_in': 'USD', 'amount': 100.0, 'currency_out': 'BTC'}
-INFO:root:The amount out is 0.0037408800000000007
-INFO:root:The trade is starting 100.0 USD BTC 1 
-INFO:root:The trade is {'amount_out': 0.0037408800000000007}
-INFO:root:The trade is created 0.0037408800000000007 None
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:45:14] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/functions.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_in': 'USD', 'amount': 5.0, 'currency_out': 'LVL'}
-INFO:root:The amount out is 3.0244500429
-INFO:root:The trade is starting 5.0 USD LVL 1 
-INFO:root:The trade is {'amount_out': '3.0244500429', 'currency_out': 'LVL'}
-INFO:root:The trade is created 3.0244500429 LVL
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:48:05] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:root:The trade is starting {'currency_in': 'USD', 'amount': 100.0, 'currency_out': 'BTC'}
-INFO:root:The amount out is 0.0037408800000000007
-INFO:root:The trade is starting 100.0 USD BTC 1 
-INFO:root:The trade is {'amount_out': '0.0037408800000000007', 'currency_out': 'BTC'}
-INFO:root:The trade is created 0.0037408800000000007 BTC
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:48:45] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/functions.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'amount': 5.0, 'currency_out': 'LVL', 'currency_in': 'USD'}
-INFO:root:The amount out is 3.0244500429
-INFO:root:The trade is starting 5.0 USD LVL 1 
-INFO:root:The trade is {'amount_out': 3.0244500429, 'currency_out': 'LVL'}
-INFO:root:The trade is created 3.0244500429 LVL
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:52:54] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:root:The trade is starting {'amount': 10.0, 'currency_out': 'BTC', 'currency_in': 'USD'}
-INFO:root:The amount out is 0.000374088
-INFO:root:The trade is starting 10.0 USD BTC 1 
-INFO:root:The trade is {'amount_out': 0.000374088, 'currency_out': 'BTC'}
-INFO:root:The trade is created 0.000374088 BTC
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:53:05] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_out': 'BTC', 'amount': 10.0, 'currency_in': 'USD'}
-INFO:root:The amount out is 0.000374088
-INFO:root:The trade is starting 10.0 USD BTC 1 
-INFO:root:The trade is {'amount_out': 0.000374088, 'currency_out': 'BTC'}
-INFO:root:The trade is created 0.000374088 BTC
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:53:46] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:root:The trade is starting {'currency_out': 'EUR', 'amount': 1.0, 'currency_in': 'LVL'}
-INFO:root:The amount out is 1.542843
-INFO:root:The trade is starting 1.0 LVL EUR 1 
-INFO:root:The trade is {'amount_out': 1.542843, 'currency_out': 'EUR'}
-INFO:root:The trade is created 1.542843 EUR
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:56:45] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:57:02] "GET /exchanges HTTP/1.1" 200 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'amount': 1.0, 'currency_out': '"USD"', 'currency_in': '"LVL"'}
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:57:39] "[31m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 400 -
-INFO:root:The trade is starting {'amount': 2.0, 'currency_out': 'EUR', 'currency_in': 'USD'}
-INFO:root:The amount out is 1.87044
-INFO:root:The trade is starting 2.0 USD EUR 1 
-INFO:root:The trade is {'amount_out': 1.87044, 'currency_out': 'EUR'}
-INFO:root:The trade is created 1.87044 EUR
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 09:57:58] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/resources/exchange.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_in': 'USD', 'amount': 5.0, 'currency_out': 'LVL'}
-INFO:root:The amount out is 3.0244500429
-INFO:root:The trade is starting 5.0 USD LVL 1 
-INFO:root:The trade is {'amount_out': 3.0244500429, 'currency_out': 'LVL'}
-INFO:root:The trade is created 3.0244500429 LVL
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 10:19:45] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:root:The trade is starting {'currency_in': 'EUR', 'amount': 2.0, 'currency_out': 'BOB'}
-INFO:root:The amount out is 14.877938
-INFO:root:The trade is starting 2.0 EUR BOB 1 
-INFO:root:The trade is {'amount_out': 14.877938, 'currency_out': 'BOB'}
-INFO:root:The trade is created 14.877938 BOB
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 10:20:14] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_out': 'BOB', 'amount': 2.0, 'currency_in': 'EUR'}
-INFO:root:The amount out is 14.877938
-INFO:root:The trade is starting 2.0 EUR BOB 1 
-INFO:root:The trade is {'amount_out': 14.877938, 'currency_out': 'BOB'}
-INFO:root:The trade is created 14.877938 BOB
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 10:21:18] "[35m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 201 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:root:The trade is starting {'currency_in': 'BTC', 'amount': 2.0, 'currency_out': 'EUR'}
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 10:32:22] "[31m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 400 -
-INFO:root:The trade is starting {'currency_in': 'PLN', 'amount': 2.0, 'currency_out': 'EUR'}
-INFO:werkzeug:172.17.0.1 - - [09/Jun/2023 10:32:54] "[31m[1mPOST /exchanges/1/trades HTTP/1.1[0m" 400 -
-INFO:werkzeug: * Detected change in '/app/cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 109-019-144
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://172.17.0.2:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 108-413-802
-INFO:werkzeug:172.17.0.1 - - [11/Jun/2023 20:30:41] "GET /swagger-ui HTTP/1.1" 200 -
-INFO:werkzeug:172.17.0.1 - - [11/Jun/2023 20:30:42] "GET /openapi.json HTTP/1.1" 200 -
-INFO:werkzeug:172.17.0.1 - - [11/Jun/2023 20:30:42] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 835-540-974
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 835-540-974
-INFO:werkzeug: * Detected change in 'D:\\Samuel\\Python_VSc\\Flask_trade_SurgLogs\\cli.py', reloading
-INFO:werkzeug: * Restarting with stat
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 835-540-974

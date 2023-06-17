@@ -1,7 +1,9 @@
 from flask_smorest import abort
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import scoped_session, sessionmaker
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import logging
 
@@ -13,6 +15,7 @@ from models import CurrenciesModel
 from models import HistoryModel
 from schemas import UserLogSchema, WalletSchema
 
+thread_local_session = scoped_session(sessionmaker())
 
 def update_deposit_amount(cur_shortcut, amount, exchange_id):
     # Check if the user already has funds in this currency
@@ -58,6 +61,10 @@ def make_trade(wallet, exchange_id):
     currency_out = wallet.get('currency_out')
     amount = wallet.get('amount')
     
+    # check if the amount is positive
+    if amount <= 0:
+        abort(400, message="The amount must be positive.")
+    
     # Get the exchange rate from currency_in to EUR
     cur_to_eur = CurrenciesModel.query.filter_by(cur_shortcut=currency_in).first().cur_to_eur
     # Calculate the amount in EUR
@@ -71,7 +78,7 @@ def make_trade(wallet, exchange_id):
 
     # Add the trade to the History
     logging.info(f'The trade is starting {amount} {currency_in} {currency_out} {exchange_id} ')
-    history = HistoryModel(amount=amount, currency_in=currency_in, currency_out=currency_out, exchange_id=exchange_id, timestamp=datetime.now())
+    history = HistoryModel(amount=amount, currency_in=currency_in, currency_out=currency_out, exchange_id=exchange_id, timestamp=datetime.now() + timedelta(hours=2))
     db.session.add(history)
     db.session.commit()
     
@@ -84,8 +91,11 @@ def make_trade(wallet, exchange_id):
     return trade_data
 
 
-
 def populate_currencies_from_json(json_file_path):
+    # check if the database is empty
+    if CurrenciesModel.query.first():
+        return  
+    
     # Load data from JSON file
     with open(json_file_path, encoding='utf-8') as file:
         data = json.load(file)
@@ -110,51 +120,56 @@ def populate_currencies_from_json(json_file_path):
             symbol=currency['symbol'],
             cur_to_eur=0.0,  # Set appropriate values
             eur_to_cur=0.0,  # Set appropriate values
-            timestamp=datetime.now()  # Set appropriate values
+            timestamp=datetime.now() + timedelta(hours=2)  # Set appropriate values
         )
         db.session.add(currency['cur_shortcut'])
 
     db.session.commit()
 
 
+def update_currencies_background():
+    logging.info('Updating currency rates in the background khvkb')
+    # Perform the time-consuming func
+    update_currency_rates()
+
+
 def update_currency_rates():
-    # API endpoint base URL
-    base_url = 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/'
-
-    # Retrieve currency list with EUR as base currency
-    eur_data = requests.get(base_url + 'eur.json').json()
-    # Update currency rates in the table
-
-    # Go trought all the currencies in the database and update the rates if needed
-    for currency in CurrenciesModel.query.all():
-        # check if timsstamp is same as today
-        if currency.timestamp.date() == datetime.now().date():
-            continue
+    try:
+        base_url = 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/'
+        eur_data = requests.get(base_url + 'eur.json').json()
         
-        cur = currency.cur_shortcut.lower()  # Convert currency code to lowercase
-        if cur in eur_data['eur']:
-            currency.eur_to_cur = eur_data["eur"][cur]  
+        logging.info('Updating currency rates in the database jv.')
+        for currency in CurrenciesModel.query.all():
+            update_currency(currency, eur_data, base_url)
 
-            # Retrieve currency value for currency to EUR')
-            cur_to_eur_data = requests.get(base_url + f'{cur}/eur.json').json()
-            currency.cur_to_eur = cur_to_eur_data["eur"]
+        db.session.commit()
 
-            # Update the timestamp
-            currency.timestamp = datetime.now()
-            db.session.add(currency)
+        for user in UserLogModel.query.all():
+            calculate_wallet_value(user.exchange_id)
 
-    # Commit the changes to the database
-    db.session.commit()
-    return {'message': 'Currency rates updated successfully.'}, 200
-
-    # Update the wallet value for all users
-    for user in UserLogModel.query.all():
-        calculate_wallet_value(user.exchange_id)
-
-    return 200
+        return {'message': 'Currency rates updated successfully.'}, 200
+    except:
+        abort(409, message="An error occurred during currency update processvvyviub.")
 
 
+def update_currency(currency, eur_data, base_url):
+    if currency.timestamp.date() == datetime.now().date() + timedelta(hours=2) and currency.eur_to_cur != 0.0:
+        return
+
+    cur = currency.cur_shortcut.lower()
+    if cur in eur_data['eur']:
+        currency.eur_to_cur = eur_data["eur"][cur]
+
+        cur_to_eur_data = requests.get(base_url + f'{cur}/eur.json').json()
+        currency.cur_to_eur = cur_to_eur_data["eur"]
+ 
+        currency.timestamp = datetime.now() + timedelta(hours=2)
+
+        db.session.add(currency)
+        
+    
 def calculate_wallet_value(exchange_id):
+    logging.info(f'Calculating wallet value for user with exchange_id {exchange_id}.')
     # go trought all the funds in wallet and calculate the value of the wallet in EUR 
     wallet_value = 0
     for wallet in WalletModel.query.filter_by(exchange_id=exchange_id).all():

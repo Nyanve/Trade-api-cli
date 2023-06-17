@@ -2,7 +2,6 @@ from flask.views import MethodView
 from flask_smorest import Blueprint
 from flask import request, jsonify
 from sqlalchemy import or_
-from datetime import datetime
 import logging
 
 from db import db

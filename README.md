@@ -23,12 +23,6 @@ To install and run the Trade API, please follow the steps below:
    ```bash
    flask run
    ```
-5. Run populating endpoints in resources.currency.py:
-    ("/currencies/populate")
-    ("/currencies/update")
-    this will populate the database with currencies and their exachange rates.
-    this will be done automatically sadly there was no time to implement it. 
-
 
         
 

@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from db import db
 import models
 
+from functions import populate_currencies_from_json, update_currency_rates
 
 from resources.currencies import blp as CurrenciesBlueprint
 from resources.exchange import blp as ExchangeBlueprint
@@ -38,8 +39,15 @@ def create_app(db_url=None):
 
     
     @app.before_first_request
-    def create_tables():
+    def setup_database():
+        logging.info('Setting up database')
         db.create_all()
+        json_file_name = "Currency_info.json"
+        json_file_path = os.path.join(os.getcwd(), json_file_name)
+        if os.path.isfile(json_file_path):
+            pass
+            populate_currencies_from_json(json_file_path)
+            update_currency_rates()
     
 
     # app.config["JWT_SECRET_KEY"] = "sam"
