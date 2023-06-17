@@ -4,14 +4,14 @@ import logging
 
 
 # base URL for the API, if it doesn't work, replace it with your own URL
-url = 'http://127.0.0.1.5000/'
+base_url = 'http://127.0.0.1:5000/'
 
 
 @click.command()
 @click.option('--name', prompt='Enter the name')
 @click.option('--currency', prompt='Enter the base currency')
 def create_user_log(name, currency):
-    url = f'{url}exchanges'  
+    url = f'{base_url}exchanges'  
     data = {
         'name': name,
         'currency': currency,
@@ -30,7 +30,7 @@ def create_user_log(name, currency):
 @click.option('--amount', type=float, prompt='Enter the amount')
 @click.option('--cur_shortcut', prompt='Enter the currency (3-letter shortcut)')
 def deposit(exchange_id, amount, cur_shortcut):
-    url = f"{url}exchanges/{exchange_id}"
+    url = f"{base_url}exchanges/{exchange_id}"
     payload = {
         'amount': amount,
         'cur_shortcut': cur_shortcut
@@ -50,7 +50,7 @@ def deposit(exchange_id, amount, cur_shortcut):
 @click.option('--currency_in', prompt='Enter the currency in')
 @click.option('--currency_out', prompt='Enter the currency out')
 def create_trade(exchange_id, amount, currency_in, currency_out):
-    url = f'{url}exchanges/{exchange_id}/trades'  # Replace with the correct URL of your API endpoint
+    url = f'{base_url}exchanges/{exchange_id}/trades'  # Replace with the correct URL of your API endpoint
     data = {
         'amount': amount,
         'currency_in': currency_in,
@@ -78,7 +78,7 @@ def create_trade(exchange_id, amount, currency_in, currency_out):
 @click.option('--date_from', help='Filter trades from this date (YYYY-MM-DD)')
 @click.option('--date_to', help='Filter trades up to this date (YYYY-MM-DD)')
 def fetch_trade_history(offset, limit, exchange_id, search, date_from, date_to):
-    url = f'{url}exchanges/history'
+    url = f'{base_url}exchanges/history'
     params = {
         'offset': offset,
         'limit': limit,
