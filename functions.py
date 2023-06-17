@@ -3,7 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 import requests
 import logging
 
@@ -60,7 +60,7 @@ def make_trade(wallet, exchange_id):
     currency_in = wallet.get('currency_in')
     currency_out = wallet.get('currency_out')
     amount = wallet.get('amount')
-    
+
     # check if the amount is positive
     if amount <= 0:
         abort(400, message="The amount must be positive.")
@@ -78,7 +78,7 @@ def make_trade(wallet, exchange_id):
 
     # Add the trade to the History
     logging.info(f'The trade is starting {amount} {currency_in} {currency_out} {exchange_id} ')
-    history = HistoryModel(amount=amount, currency_in=currency_in, currency_out=currency_out, exchange_id=exchange_id, timestamp=datetime.now() + timedelta(hours=2))
+    history = HistoryModel(amount=amount, currency_in=currency_in, currency_out=currency_out, exchange_id=exchange_id, timestamp=datetime.now() )
     db.session.add(history)
     db.session.commit()
     
@@ -120,7 +120,7 @@ def populate_currencies_from_json(json_file_path):
             symbol=currency['symbol'],
             cur_to_eur=0.0,  # Set appropriate values
             eur_to_cur=0.0,  # Set appropriate values
-            timestamp=datetime.now() + timedelta(hours=2)  # Set appropriate values
+            timestamp=datetime.now()   # Set appropriate values
         )
         db.session.add(currency['cur_shortcut'])
 
@@ -153,7 +153,7 @@ def update_currency_rates():
 
 
 def update_currency(currency, eur_data, base_url):
-    if currency.timestamp.date() == datetime.now().date() + timedelta(hours=2) and currency.eur_to_cur != 0.0:
+    if currency.timestamp.date() == datetime.now().date() and currency.eur_to_cur != 0.0:
         return
 
     cur = currency.cur_shortcut.lower()
@@ -163,7 +163,7 @@ def update_currency(currency, eur_data, base_url):
         cur_to_eur_data = requests.get(base_url + f'{cur}/eur.json').json()
         currency.cur_to_eur = cur_to_eur_data["eur"]
  
-        currency.timestamp = datetime.now() + timedelta(hours=2)
+        currency.timestamp = datetime.now()
 
         db.session.add(currency)
         

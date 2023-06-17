@@ -41,11 +41,11 @@ python cli.py deposit 1
 ```
 To create a trade:
 ```bash
-python your_script_name.py create-trade 1 
+python cli.py create-trade 1 
 ```
 To fetch the trade history:
 ```bash
-python your_script_name.py fetch-trade-history --offset 0 --limit 10 --exchange_id 1 --search "ether" --date_from "2023-06-01" --date_to "2023-06-09"
+python cli.py fetch-trade-history --offset 0 --limit 10 --exchange_id 1 --search "ether" --date_from "2023-06-01" --date_to "2023-06-09"
 ```
 If you want to see the help message, please run:
 ```bash

@@ -43,7 +43,6 @@ class UserLog(MethodView):
         logging.info(f'The user log  {user_log}')
         # make amount 0.0 and put it in the user_log
     
-        
         try:
             logging.info(f'The exchange data is starting {cur_shortcut}')
             currency = CurrenciesModel.query.filter_by(cur_shortcut=cur_shortcut).first()
@@ -53,7 +52,6 @@ class UserLog(MethodView):
             abort(409, message="Currency that you chose is not in the database or does not exist.")
 
         try:
-
             db.session.add(user_log)
             db.session.commit()
                 

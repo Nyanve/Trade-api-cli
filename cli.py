@@ -18,7 +18,7 @@ def create_user_log(name, currency):
     }
     response = requests.post(url, json=data)
     if response.status_code == 201:
-        click.echo('New created object.')
+        click.echo('New created object with exchange_id: ' + str(response.json().get('exchange_id')))
     elif response.status_code == 409:
         click.echo(response.json().get('message'))
     else:
