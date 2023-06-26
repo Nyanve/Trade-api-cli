@@ -24,20 +24,12 @@ class HistorySearch(MethodView):
     # This route will return the history of trades based on the search criteria
     @blp.arguments(SearchHistorySchema, location="query")
     def get(self, args):
-        logging.info('HistorySearch get begun')
-        logging.info(f'args {args}')
         exchange_id = request.args.get("exchange_id")
-        logging.info(f'exchange_id {exchange_id}')
         offset = request.args.get("offset", default=0, type=int)
-        logging.info(f'offset {offset}')
         limit = request.args.get("limit", default=10, type=int)
-        logging.info(f'limit {limit}')
         search = request.args.get("search")
-        logging.info(f'search {search}')
         date_from = request.args.get("date_from")
-        logging.info(f'date_from {date_from}')
         date_to = request.args.get("date_to")
-        logging.info(f'date_to {date_to}')
 
         trades = HistoryModel.query
 
@@ -59,7 +51,7 @@ class HistorySearch(MethodView):
             trades = trades.filter(HistoryModel.timestamp <= date_to)
 
         trades = trades.offset(offset).limit(limit).all()
-
+        logging.info(f'The history is searched by criteria')
         return jsonify(HistorySchema(many=True).dump(trades))
     
       

@@ -9,4 +9,5 @@ class UserLogModel(db.Model):
     amount = db.Column(db.Float, nullable=False)
 
     wallet = db.relationship("WalletModel", back_populates="user_log", lazy="dynamic", cascade="save-update, merge, delete")
+    liked = db.relationship("LikedModel", back_populates="user_log", lazy="dynamic", cascade="save-update, merge, delete")
     

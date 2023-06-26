@@ -29,7 +29,10 @@ class SearchHistorySchema(Schema):
     date_from = fields.Date()
     date_to = fields.Date()
     
-
+class PlainLikedSchema(Schema):
+    id = fields.Int(dump_only=True)
+    cur_shortcut = fields.Str(required=True)
+    
 
 class CurrenciesSchema(Schema):
     id = fields.Int(dump_only=True)
@@ -56,9 +59,12 @@ class WalletSchema(PlainWalletSchema):
 
 class UserLogSchema(PlainUserLogSchema):
     wallet = fields.List(fields.Nested(PlainWalletSchema()), dump_only=True)
- 
-
-
+    liked = fields.List(fields.Nested(PlainLikedSchema()), dump_only=True)
+    
+class LikedSchema(PlainLikedSchema):
+    exchange_id = fields.Int(required=True, load_only=True)
+    user_log = fields.Nested(PlainUserLogSchema(), dump_only=True)
+    
 
     
 

@@ -1,11 +1,15 @@
 import os
 import logging
+from dotenv import load_dotenv
+
+logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
+
 
 from flask_smorest import Api
 from flask_jwt_extended import JWTManager
 from flask import Flask, jsonify
 from flask_migrate import Migrate
-from dotenv import load_dotenv
+
 
 
 from db import db
@@ -20,7 +24,6 @@ from resources.history import blp as HistoryBlueprint
 
 
 def create_app(db_url=None):
-    logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
     app = Flask(__name__)
     load_dotenv()
 
@@ -35,8 +38,7 @@ def create_app(db_url=None):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
     migrate = Migrate(app, db)
-    api = Api(app)
-
+    
     
     @app.before_first_request
     def setup_database():
@@ -113,7 +115,8 @@ def create_app(db_url=None):
     #             }
     #         ),
     #         401,
-    #     )
+
+    api = Api(app)   
     
     api.register_blueprint(CurrenciesBlueprint)
     api.register_blueprint(ExchangeBlueprint)

@@ -7,3 +7,4 @@ __pycache__
 instance
 example.log
 cli.log
+test_script.py

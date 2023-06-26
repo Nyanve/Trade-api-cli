@@ -33,18 +33,15 @@ class UserLog(MethodView):
     @blp.arguments(UserLogSchema)
     @blp.response(201, UserLogSchema)
     def post(self, user_log_data):
-        logging.info(f'The user log data is starting {user_log_data}')
         # get the currency shortcut from the user_log_data
         cur_shortcut = user_log_data['currency']
         
         # add amount to user_log_data and give it walue0.0 and put it in the user_log
         user_log_data['amount'] = 0.0
         user_log = UserLogModel(**user_log_data)
-        logging.info(f'The user log  {user_log}')
+        
         # make amount 0.0 and put it in the user_log
-    
         try:
-            logging.info(f'The exchange data is starting {cur_shortcut}')
             currency = CurrenciesModel.query.filter_by(cur_shortcut=cur_shortcut).first()
             if currency is None:
                 raise NoResultFound
@@ -58,7 +55,7 @@ class UserLog(MethodView):
         except SQLAlchemyError:
             abort(409, message="A user with that username already exists.")
         
-
+        logging.info(f'The exchange is created {user_log}')
         return user_log, 201
   
 
@@ -77,7 +74,6 @@ class Wallet(MethodView):
         # get the walues out of the wallet
         cur_shortcut = Wallet_data.get('cur_shortcut')
         amount = Wallet_data.get('amount')
-        
         # check if the amount is positive
         if amount <= 0:
             abort(400, message="The amount must be positive.")
@@ -91,6 +87,7 @@ class Wallet(MethodView):
 
         try:
             update_deposit_amount(cur_shortcut, amount, exchange_id)
+            logging.info(f'The deposit is created {wallet}')
         except SQLAlchemyError:
             abort(500, message="An error occurred while updating the deposit in Wallet.")
 
@@ -119,7 +116,6 @@ class UserTrade(MethodView):
     @blp.arguments(TradeSchema)
     @blp.response(201, TradeSchema)
     def post(self, Trade_data, exchange_id):
-        logging.info(f'The trade is starting {Trade_data}') 
         # Check if the user has enough funds in their wallet, this wil automatically deploy Trade if true
         trade_data = check_user_funds(Trade_data, exchange_id)
         

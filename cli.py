@@ -6,6 +6,8 @@ import logging
 # base URL for the API, if it doesn't work, replace it with your own URL
 base_url = 'http://127.0.0.1:5000/'
 
+logging.basicConfig(filename='cli.log', level=logging.INFO)
+
 
 @click.command()
 @click.option('--name', prompt='Enter the name')
@@ -96,6 +98,74 @@ def fetch_trade_history(offset, limit, exchange_id, search, date_from, date_to):
     else:
         click.echo('Failed to fetch trade history.')
 
+
+import click
+import requests
+
+@click.command()
+@click.argument('exchange_id', type=int)
+@click.option('--action', type=click.Choice(['update', 'like', 'unlike']), prompt='Do you want to update, like, or unlike the currency?')
+def bulk_action(exchange_id, action):
+    cur_shortcuts = []
+
+    while True:
+        cur = click.prompt('Enter the currency (3-letter shortcut) or "stop" to finish', type=str)
+        if cur.lower() == 'stop':
+            break
+        cur_shortcuts.append(cur)
+
+    for cur in cur_shortcuts:
+        if action == 'update':
+            logging.info(f'Updating currency {cur}')
+            # Call the /update_currency endpoint
+            update_url = f"{base_url}update_currency"
+            update_payload = { 
+                'cur_shortcut': cur,
+            }
+            update_response = requests.post(update_url, json=update_payload)
+            
+            if update_response.status_code == 200:
+                click.echo(f"Currency {cur} updated successfully.")
+            else:
+                click.echo("Failed to update currency.")
+   
+        elif action == 'like':
+            logging.info(f'Liking currency {cur}')
+            # Call the /add_to_liked endpoint
+            like_url = f"{base_url}add_to_liked"
+            like_payload = {
+                'cur_shortcut': cur,
+                'exchange_id': exchange_id
+            }
+            like_response = requests.post(like_url, json=like_payload)
+            if like_response.status_code == 200:
+                click.echo(f'Currency {cur} added to liked list')
+            elif like_response.status_code == 409:
+                click.echo(like_response.json().get('message'))
+            elif like_response.status_code == 404:
+                click.echo(like_response.json().get('message'))
+            else:
+                click.echo(like_response.json().get('message'))
+
+        elif action == 'unlike':
+            logging.info(f'Unliking currency {cur}')
+            # Call the /remove_from_liked endpoint
+            remove_url = f"{base_url}remove_from_liked"
+            remove_payload = {
+                'cur_shortcut': cur,
+                'exchange_id': exchange_id
+            }
+            remove_response = requests.post(remove_url, json=remove_payload)
+            if remove_response.status_code == 200:
+                click.echo(f'Currency {cur} removed from liked list')
+            elif remove_response.status_code == 409:
+                click.echo(remove_response.json().get('message'))
+            elif remove_response.status_code == 404:
+                click.echo(remove_response.json().get('message'))
+            else:
+                click.echo(remove_response.json().get('message'))
+
+
 @click.group()
 def cli():
     pass
@@ -104,6 +174,7 @@ cli.add_command(create_user_log)
 cli.add_command(deposit)
 cli.add_command(create_trade)
 cli.add_command(fetch_trade_history)
+cli.add_command(bulk_action)
 
 if __name__ == '__main__':
     cli()

@@ -13,6 +13,7 @@ from models import UserLogModel
 from models import WalletModel
 from models import CurrenciesModel
 from models import HistoryModel
+from models import LikedModel
 from schemas import UserLogSchema, WalletSchema
 
 thread_local_session = scoped_session(sessionmaker())
@@ -74,10 +75,9 @@ def make_trade(wallet, exchange_id):
     eur_to_cur = CurrenciesModel.query.filter_by(cur_shortcut=currency_out).first().eur_to_cur
     # Calculate the amount in currency_out
     amount_out = amount_eur * eur_to_cur
-    logging.info(f'The amount out is {amount_out}')
+
 
     # Add the trade to the History
-    logging.info(f'The trade is starting {amount} {currency_in} {currency_out} {exchange_id} ')
     history = HistoryModel(amount=amount, currency_in=currency_in, currency_out=currency_out, exchange_id=exchange_id, timestamp=datetime.now() )
     db.session.add(history)
     db.session.commit()
@@ -86,7 +86,7 @@ def make_trade(wallet, exchange_id):
     update_deposit_amount(currency_out, amount_out, exchange_id)
     # change the amount_out to string
     
-
+    logging.info(f'Trade has been made: {amount} {currency_in} -> {amount_out} {currency_out}')
     trade_data = {'amount_out': amount_out, 'currency_out': currency_out}
     return trade_data
 
@@ -128,8 +128,7 @@ def populate_currencies_from_json(json_file_path):
 
 
 def update_currencies_background():
-    logging.info('Updating currency rates in the background khvkb')
-    # Perform the time-consuming func
+    # Performing the time-consuming func
     update_currency_rates()
 
 
@@ -138,7 +137,6 @@ def update_currency_rates():
         base_url = 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/'
         eur_data = requests.get(base_url + 'eur.json').json()
         
-        logging.info('Updating currency rates in the database jv.')
         for currency in CurrenciesModel.query.all():
             update_currency(currency, eur_data, base_url)
 
@@ -146,17 +144,18 @@ def update_currency_rates():
 
         for user in UserLogModel.query.all():
             calculate_wallet_value(user.exchange_id)
-
+        logging.info('Currency rates updated and wallet walue calculated.')
         return {'message': 'Currency rates updated successfully.'}, 200
     except:
         abort(409, message="An error occurred during currency update processvvyviub.")
 
 
 def update_currency(currency, eur_data, base_url):
+
+    cur = currency.cur_shortcut.lower()
     if currency.timestamp.date() == datetime.now().date() and currency.eur_to_cur != 0.0:
         return
 
-    cur = currency.cur_shortcut.lower()
     if cur in eur_data['eur']:
         currency.eur_to_cur = eur_data["eur"][cur]
 
@@ -166,10 +165,10 @@ def update_currency(currency, eur_data, base_url):
         currency.timestamp = datetime.now()
 
         db.session.add(currency)
+        return {'message': f'Currency updated successfully.'}, 200
         
     
 def calculate_wallet_value(exchange_id):
-    logging.info(f'Calculating wallet value for user with exchange_id {exchange_id}.')
     # go trought all the funds in wallet and calculate the value of the wallet in EUR 
     wallet_value = 0
     for wallet in WalletModel.query.filter_by(exchange_id=exchange_id).all():
@@ -191,6 +190,29 @@ def calculate_wallet_value(exchange_id):
     db.session.commit()
 
 
+def add_to_liked(cur_shortcut, exchange_id):
+    logging.info(f'Adding {cur_shortcut} to liked currencies for user with exchange_id {exchange_id}.')
+    # check if the currency is already in the liked currencies
+    if LikedModel.query.filter_by(cur_shortcut=cur_shortcut, exchange_id=exchange_id).first():
+        abort(409, message="This currency is already in your liked currencies.")
+
+    # add the currency to the liked currencies
+    liked_currency = LikedModel(cur_shortcut=cur_shortcut, exchange_id=exchange_id)
+    db.session.add(liked_currency)
+    db.session.commit()
+
+    return {'message': 'Currency added to liked currencies successfully.'}, 200
 
 
-    
+def remove_from_liked(cur_shortcut, exchange_id):
+    logging.info(f'Removing {cur_shortcut} from liked currencies for user with exchange_id {exchange_id}.')
+    # check if the currency is already in the liked currencies
+    liked_currency = LikedModel.query.filter_by(cur_shortcut=cur_shortcut, exchange_id=exchange_id).first()
+    if not liked_currency:
+        abort(409, message="This currency is not in your liked currencies.")
+
+    # remove the currency from the liked currencies
+    db.session.delete(liked_currency)
+    db.session.commit()
+
+    return {'message': 'Currency removed from liked currencies successfully.'}, 200
