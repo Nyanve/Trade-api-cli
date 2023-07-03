@@ -52,6 +52,6 @@ class HistorySearch(MethodView):
 
         trades = trades.offset(offset).limit(limit).all()
         logging.info(f'The history is searched by criteria')
-        return jsonify(HistorySchema(many=True).dump(trades))
+        return jsonify(HistorySchema(many=True).dump(trades)), 200
     
       

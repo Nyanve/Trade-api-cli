@@ -74,7 +74,7 @@ class UpdateCurrency(MethodView):
                 return jsonify({'message': 'Currency not found'}), 404
 
             
-            return jsonify(update_currency(currency, eur_data, base_url))
+            return jsonify(update_currency(currency, eur_data, base_url)), 200
 
 
 
@@ -89,7 +89,7 @@ class AddToLiked(MethodView):
         if not currency:
             abort(404, message="Currency not found in the database")
         
-        return jsonify(add_to_liked(cur_shortcut, exchange_id))
+        return jsonify(add_to_liked(cur_shortcut, exchange_id)), 200
         
 
 
@@ -104,7 +104,7 @@ class RemoveFromLiked(MethodView):
         if not currency:
             abort(404, message="Currency not found in the database")
         
-        return jsonify(remove_from_liked(cur_shortcut, exchange_id))
+        return jsonify(remove_from_liked(cur_shortcut, exchange_id)), 200
 
 @blp.route("/liked")
 # This route will return all the currencies in the liked database

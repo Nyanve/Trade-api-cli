@@ -154,7 +154,7 @@ def update_currency(currency, eur_data, base_url):
 
     cur = currency.cur_shortcut.lower()
     if currency.timestamp.date() == datetime.now().date() and currency.eur_to_cur != 0.0:
-        return
+        return 200
 
     if cur in eur_data['eur']:
         currency.eur_to_cur = eur_data["eur"][cur]
